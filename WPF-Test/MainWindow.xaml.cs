@@ -31,6 +31,9 @@ namespace WPF_Test
             InitializeMQTT();
         }
 
+        /// <summary>
+        /// Start the clock timer
+        /// </summary>
         private void InitializeClock()
         {
             clockTimer = new DispatcherTimer();
@@ -40,6 +43,11 @@ namespace WPF_Test
             UpdateClock(null,null); // call the function imediatelly to update on form load rather than 1 second in
         }
 
+        /// <summary>
+        /// Refresh the clock time on a timer event
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="a"></param>
         private void UpdateClock(object s, EventArgs a)
         {
             txtClock.Text = "" + DateTime.Now.Hour.ToString("00") + ":"
@@ -47,6 +55,9 @@ namespace WPF_Test
                                 + DateTime.Now.Second.ToString("00");
         }
 
+        /// <summary>
+        /// Initialise the MQTT manager
+        /// </summary>
         private void InitializeMQTT()
         {
             mqttManager = new MQTTManager();
@@ -54,6 +65,11 @@ namespace WPF_Test
             mqttManager.MessageReceived += MQTTManager_MessageReceived;
         }
 
+        /// <summary>
+        /// Event handler for MQTT massage received
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
         {
             decimal temp = e.Temperature;

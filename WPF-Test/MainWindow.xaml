@@ -7,9 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Margin="10,10">
-        <Border BorderBrush="Blue" BorderThickness="3" Grid.RowSpan="2"></Border>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TextBlock x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="72" TextAlignment="Center" Height="100" HorizontalAlignment="Center"/>
-        <Calendar VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" Grid.Row="1" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column ="0" Content="Home" FontSize="42" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="72" TextAlignment="Center" Height="100" HorizontalAlignment="Center"/>
+        <Calendar Grid.Row="2" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" />
     </Grid>
 </Window>
