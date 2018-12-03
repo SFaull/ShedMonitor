@@ -72,9 +72,12 @@ namespace WPF_Test
         /// <param name="e"></param>
         private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
         {
-            decimal temp = e.Temperature;
-            decimal hum = e.Humidity;
-            Console.WriteLine("Temperature: {0}C, Humidity: {1}%", temp, hum);
+
+                decimal temp = e.Temperature;
+                decimal hum = e.Humidity;
+                Console.WriteLine("Temperature: {0}C, Humidity: {1}%", temp, hum);
+                txtHumidity.Dispatcher.BeginInvoke( (Action)(() => txtHumidity.Text = "Humidity: " + e.Humidity + "%") );
+
         }
     }
 }

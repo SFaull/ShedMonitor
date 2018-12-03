@@ -39,9 +39,12 @@ namespace WPF_Test
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MQTTManager()
         {
-            //empty
+
         }
 
         public void Connect()
@@ -51,6 +54,9 @@ namespace WPF_Test
 
             // register a callback-function (we have to implement, see below) which is called by the library when a message was received
             client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+            string[] subscriptions = { "test" };
+            byte[] qos = { 0 };
+            client.Subscribe(subscriptions, qos);
 
             // use a unique id as client id, each time we start the application
             clientId = Guid.NewGuid().ToString();

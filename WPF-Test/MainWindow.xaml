@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Test"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Margin="10,10">
+                
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -18,8 +27,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column ="0" Content="Home" FontSize="42" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="72" TextAlignment="Center" Height="100" HorizontalAlignment="Center"/>
+
+        <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
+            <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="72" TextAlignment="Center" Height="100" HorizontalAlignment="Center"/>
+        </materialDesign:Card>
+        
+        
         <Calendar Grid.Row="2" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" />
+        <materialDesign:Card Grid.Row="2" Grid.Column="1" Padding="32" Margin="16">
+            <TextBlock  Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: 50deg</TextBlock>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2" Grid.Column="1" Padding="32" Margin="16">
+            <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity: 50%</TextBlock>
+        </materialDesign:Card>
     </Grid>
 </Window>
