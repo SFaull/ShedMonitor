@@ -13,32 +13,60 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid Margin="10,10">
-                
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="MainWindow" Height="660" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="gridParent" Margin="10,10">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
-            <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="72" TextAlignment="Center" Height="100" HorizontalAlignment="Center"/>
-        </materialDesign:Card>
+
+        <Grid x:Name="gridChildLeft"  Grid.Column="0" Margin="10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
+                <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
+            </materialDesign:Card>
+
+            <Calendar Grid.Row="1" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/>
+        </Grid>
+
+        <Grid x:Name="gridChildRight" Grid.Column="1" Margin="10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
+                <TextBlock x:Name="txtTemperature" Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: </TextBlock>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="32" Margin="16">
+                <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity: </TextBlock>
+            </materialDesign:Card>
+
+        </Grid>
+
+
         
         
-        <Calendar Grid.Row="2" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" />
-        <materialDesign:Card Grid.Row="2" Grid.Column="1" Padding="32" Margin="16">
-            <TextBlock  Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: 50deg</TextBlock>
-        </materialDesign:Card>
-        <materialDesign:Card Grid.Row="2" Grid.Column="1" Padding="32" Margin="16">
-            <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity: 50%</TextBlock>
-        </materialDesign:Card>
+        
+
     </Grid>
 </Window>

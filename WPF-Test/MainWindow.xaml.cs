@@ -76,7 +76,8 @@ namespace WPF_Test
                 decimal temp = e.Temperature;
                 decimal hum = e.Humidity;
                 Console.WriteLine("Temperature: {0}C, Humidity: {1}%", temp, hum);
-                txtHumidity.Dispatcher.BeginInvoke( (Action)(() => txtHumidity.Text = "Humidity: " + e.Humidity + "%") );
+            txtTemperature.Dispatcher.BeginInvoke((Action)(() => txtTemperature.Text = "Temperature: " + e.Temperature + "°C"));
+            txtHumidity.Dispatcher.BeginInvoke( (Action)(() => txtHumidity.Text = "Humidity: " + e.Humidity + "%") );
 
         }
     }
