@@ -10,9 +10,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "config.h"
+#include "ledcontroller.h"
+#include "FastLED.h"
 
 #define PUBLISH_PERIOD 5000 // 5 seconds
 #define SEALEVELPRESSURE_HPA (1013.25)
+#define NUM_LEDS 1
+#define DATA_PIN 4
 
 Adafruit_BME280 bme; // I2C
 WiFiClient espClient;
@@ -35,13 +39,18 @@ float temperature = 0;
 float pressure = 0;
 float altitude = 0;
 
+CRGB leds[NUM_LEDS];
+LEDController ledController(leds);
+
 void initOTA(void)
 {
   ArduinoOTA.onStart([]() {
+    ledController.setColour(255,0,0);
     Serial.println("OTA Update Started");
   });
   ArduinoOTA.onEnd([]() {
     Serial.println("\nOTA Update Complete");
+    ledController.setColour(0,0,0);
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
@@ -63,6 +72,7 @@ void initSensor()
   // (you can also pass in a Wire library object like &Wire2)
   bool status = bme.begin(0x76);  
   if (!status) {
+    ledController.setColour(255,0,0);
     Serial.println("Could not find a valid BME280 sensor, check wiring!");
     while (1);
   }
@@ -144,8 +154,11 @@ void reconnect() {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.print(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
+      ledController.setColour(255,0,0);
+      // Wait 5 seconds before retrying and flash LED red
+      delay(3000);
+      ledController.setColour(0,0,0);
+      delay(2000);
     }
   }
 }
@@ -162,6 +175,8 @@ void readSensors(void)
 void setup()
 {
   Serial.begin(115200);
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  ledController.setColour(0,0,0);
 
   /* Setup WiFi and MQTT */
   //Local intialization. Once its business is done, there is no need to keep it around
@@ -173,8 +188,9 @@ void setup()
 
   initOTA();
   initSensor();
-
+  
   setTimer(&publishTimer);
+  ledController.setColourTarget(0,0,0);
 }
 
 void loop()
@@ -184,12 +200,14 @@ void loop()
     reconnect();
   client.loop();
   ArduinoOTA.handle();
+  ledController.run();
 
   if (timerExpired(publishTimer, PUBLISH_PERIOD))  // get the time every 5 seconds
   {
     setTimer(&publishTimer);  // reset timer
     readSensors();
     publishReadings();
+    ledController.pulse(0,255,0);
   }
 }
 
