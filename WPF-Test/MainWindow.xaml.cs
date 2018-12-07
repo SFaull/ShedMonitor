@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Wpf.Gauges;
 
 namespace WPF_Test
 {
@@ -78,6 +79,8 @@ namespace WPF_Test
                 Console.WriteLine("Temperature: {0}C, Humidity: {1}%", temp, hum);
             txtTemperature.Dispatcher.BeginInvoke((Action)(() => txtTemperature.Text = "Temperature: " + e.Temperature + "°C"));
             txtHumidity.Dispatcher.BeginInvoke( (Action)(() => txtHumidity.Text = "Humidity: " + e.Humidity + "%") );
+            guageHumidity.Dispatcher.BeginInvoke((Action)(() => guageHumidity.Value = (double)e.Humidity));
+            guageTemperature.Dispatcher.BeginInvoke((Action)(() => guageTemperature.Value = (double)e.Temperature));
 
         }
     }

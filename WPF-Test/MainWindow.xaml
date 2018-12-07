@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:gauges="clr-namespace:Wpf.Gauges"
         xmlns:local="clr-namespace:WPF_Test"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -51,15 +53,41 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
                 <TextBlock x:Name="txtTemperature" Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: </TextBlock>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="32" Margin="16">
-                <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity: </TextBlock>
+                <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity:</TextBlock>
             </materialDesign:Card>
+
+            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guageHumidity" Grid.Row="2" Grid.Column="0" Margin="5"
+                   Uses360Mode="True"
+                   From="0" To="100" Value="50" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="90"></RotateTransform>
+                        <ScaleTransform ScaleX="-1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
+
+            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guageTemperature" Grid.Row="3" Grid.Column="0" Margin="5"
+                   Uses360Mode="True"
+                   From="0" To="100" Value="50" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="90"></RotateTransform>
+                        <ScaleTransform ScaleX="-1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
+
 
         </Grid>
 
