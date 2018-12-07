@@ -54,11 +54,11 @@ void LEDController::pulse(int r, int g, int b)
 
 void LEDController::setColourTransition(void)
 {
-  for(int addr=0; addr<50; addr++)  // for each element in the array
+  for(int addr=0; addr<STEPS; addr++)  // for each element in the array
   {
     for (int i=0; i<3; i++)  // for each colour in turn
     {
-      transition[addr][i] = map(addr, 0, 50-1, current_colour[i], target_colour[i]); // compute the proportional colour value
+      transition[addr][i] = map(addr, 0, STEPS-1, current_colour[i], target_colour[i]); // compute the proportional colour value
     }
     /*
     Serial.print(transition[addr][0]);
@@ -79,7 +79,7 @@ void LEDController::fadeToColourTarget(void)
     setColour(transition[addr][0],transition[addr][1],transition[addr][2]);
     addr++;
     
-    if (addr>=50)
+    if (addr>=STEPS)
     {
       target_met = true;
       addr = 0;

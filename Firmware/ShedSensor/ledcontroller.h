@@ -1,6 +1,6 @@
 #include "FastLED.h"
 #define LED_UPDATE_TIMEOUT     20   // update led every 20ms
-#define PULSE_TIMEOUT 1000
+#define PULSE_TIMEOUT 500
 
 #define STEPS 25
 
@@ -25,7 +25,7 @@ class LEDController
     bool target_met;
     unsigned int target_colour[3];
     unsigned int current_colour[3];
-    unsigned int transition[50][3];
+    unsigned int transition[STEPS][3];
 
     unsigned long runTime;
     unsigned long ledTimer;
