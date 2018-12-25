@@ -12,11 +12,13 @@ namespace WPF_Test
     {
         public decimal Temperature { private set; get; }
         public decimal Humidity { private set; get; }
+        public decimal Pressure { private set; get; }
 
-        public SensorEventArgs(decimal temp, decimal hum)
+        public SensorEventArgs(decimal hum, decimal temp, decimal pressure)
         {
             Temperature = temp;
             Humidity = hum;
+            Pressure = pressure;
         }
     }
 
@@ -89,7 +91,7 @@ namespace WPF_Test
 
                 List<string> messages = receivedMessage.Split(',').ToList();
                 List<decimal> readings = messages.Select(s => decimal.Parse(s)).ToList();
-                OnMessageReceived(new SensorEventArgs(readings[0], readings[1]));
+                OnMessageReceived(new SensorEventArgs(readings[0], readings[1], readings[2]));
             }
             catch (Exception ex)
             {

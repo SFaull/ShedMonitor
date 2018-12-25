@@ -39,7 +39,7 @@
             </Grid.RowDefinitions>
 
             <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
-                <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
             </materialDesign:Card>
 
             <Calendar Grid.Row="1" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/>
@@ -51,50 +51,77 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+ <!--
             <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
                 <TextBlock x:Name="txtTemperature" Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: </TextBlock>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="32" Margin="16">
                 <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity:</TextBlock>
             </materialDesign:Card>
-
+-->
+            
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageHumidity" Grid.Row="2" Grid.Column="0" Margin="5"
-                   Uses360Mode="True"
-                   From="0" To="100" Value="50" >
+            <lvc:Gauge  x:Name="guageHumidity" Grid.Row="0" Grid.Column="0" Margin="5"
+                   Uses360Mode="False"
+                   From="0" To="100" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
-                        <RotateTransform Angle="90"></RotateTransform>
-                        <ScaleTransform ScaleX="-1"></ScaleTransform>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
                     </TransformGroup>
                 </lvc:Gauge.GaugeRenderTransform>
             </lvc:Gauge>
 
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageTemperature" Grid.Row="3" Grid.Column="0" Margin="5"
-                   Uses360Mode="True"
-                   From="0" To="100" Value="50" >
+            <lvc:Gauge  x:Name="guageTemperature" Grid.Row="1" Grid.Column="0" Margin="5"
+                   Uses360Mode="False"
+                   From="-20" To="60" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
-                        <RotateTransform Angle="90"></RotateTransform>
-                        <ScaleTransform ScaleX="-1"></ScaleTransform>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
                     </TransformGroup>
                 </lvc:Gauge.GaugeRenderTransform>
             </lvc:Gauge>
 
+            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guagePressure" Grid.Row="2" Grid.Column="0" Margin="5"
+                   Uses360Mode="False"
+                   From="0" To="200000" Value="0" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
 
+            
+            <lvc:CartesianChart Grid.Row="3" Grid.Column="0"  Series="{Binding SeriesCollection}">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+
+            <!--
+            <lvc:CartesianChart x:Name="graphTemperature" Grid.Row="3" Grid.Column="0" Series="{Binding SeriesCollection}" LegendLocation="Right" >
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Temp" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Seconds" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+            -->
         </Grid>
 
-
-        
-        
-        
 
     </Grid>
 </Window>
