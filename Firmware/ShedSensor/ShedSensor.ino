@@ -45,7 +45,7 @@ LEDController ledController(leds);
 void initOTA(void)
 {
   ArduinoOTA.onStart([]() {
-    ledController.setColour(255,0,0);
+    ledController.setColour(0,0,255);
     Serial.println("OTA Update Started");
   });
   ArduinoOTA.onEnd([]() {
@@ -173,7 +173,7 @@ void readSensors(void)
 
 
 void setup()
-{
+{    
   Serial.begin(115200);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   ledController.setColour(0,0,0);
@@ -191,6 +191,8 @@ void setup()
   
   setTimer(&publishTimer);
   ledController.setColourTarget(0,0,0);
+
+
 }
 
 void loop()
@@ -210,6 +212,3 @@ void loop()
     ledController.pulse(0,255,0);
   }
 }
-
-
-
