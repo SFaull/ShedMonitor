@@ -17,6 +17,7 @@
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define NUM_LEDS 1
 #define DATA_PIN 4
+#define MAX_BRIGHTNESS 100
 
 Adafruit_BME280 bme; // I2C
 WiFiClient espClient;
@@ -45,7 +46,7 @@ LEDController ledController(leds);
 void initOTA(void)
 {
   ArduinoOTA.onStart([]() {
-    ledController.setColour(0,0,255);
+    ledController.setColour(0,0,MAX_BRIGHTNESS);
     Serial.println("OTA Update Started");
   });
   ArduinoOTA.onEnd([]() {
@@ -72,7 +73,7 @@ void initSensor()
   // (you can also pass in a Wire library object like &Wire2)
   bool status = bme.begin(0x76);  
   if (!status) {
-    ledController.setColour(255,0,0);
+    ledController.setColour(MAX_BRIGHTNESS,0,0);
     Serial.println("Could not find a valid BME280 sensor, check wiring!");
     while (1);
   }
@@ -132,6 +133,17 @@ void callback(char* topic, byte* payload, unsigned int length)
     {
       // give info
     }
+
+    if(strcmp(input,"*RST")==0)
+    {
+      // give info
+      ledController.setColour(MAX_BRIGHTNESS,0,0);
+      client.disconnect();
+      WiFiManager wifiManager;
+      wifiManager.resetSettings();
+      wifiManager.autoConnect(deviceName);
+      //ESP.restart();
+    }
   }
 }
 
@@ -154,7 +166,7 @@ void reconnect() {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.print(" try again in 5 seconds");
-      ledController.setColour(255,0,0);
+      ledController.setColour(MAX_BRIGHTNESS,0,0);
       // Wait 5 seconds before retrying and flash LED red
       delay(3000);
       ledController.setColour(0,0,0);
@@ -176,7 +188,7 @@ void setup()
 {    
   Serial.begin(115200);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-  ledController.setColour(0,0,0);
+  ledController.setColour(MAX_BRIGHTNESS,0,0);
 
   /* Setup WiFi and MQTT */
   //Local intialization. Once its business is done, there is no need to keep it around
@@ -190,7 +202,7 @@ void setup()
   initSensor();
   
   setTimer(&publishTimer);
-  ledController.setColourTarget(0,0,0);
+  ledController.setColourTarget(0,0,0); // red
 
 
 }
@@ -209,6 +221,6 @@ void loop()
     setTimer(&publishTimer);  // reset timer
     readSensors();
     publishReadings();
-    ledController.pulse(0,255,0);
+    ledController.pulse(0,MAX_BRIGHTNESS,0);
   }
 }
