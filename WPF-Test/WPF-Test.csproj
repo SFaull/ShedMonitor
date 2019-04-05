@@ -76,6 +76,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CartesianChart\ConstantChangesChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Guages\Gauge360.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +91,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CartesianChart\ConstantChangesChart.xaml.cs">
+      <DependentUpon>ConstantChangesChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Guages\Gauge360.xaml.cs" />
     <Compile Include="MainWindow.xaml.cs">

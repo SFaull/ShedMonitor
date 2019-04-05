@@ -20,6 +20,8 @@ using LiveCharts.Defaults;
 using LiveCharts.Configurations;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Threading;
+using Wpf.CartesianChart.ConstantChanges;
 
 namespace WPF_Test
 {
@@ -31,6 +33,10 @@ namespace WPF_Test
         private MQTTManager mqttManager;
         private DispatcherTimer clockTimer;
         //private SeriesCollection scol;
+
+        private double _axisMax;
+        private double _axisMin;
+        private double _trend;
 
         public MainWindow()
         {
@@ -44,9 +50,6 @@ namespace WPF_Test
             guageTemperature.ToColor = Color.FromRgb(255, 0, 0);
             guagePressure.FromColor = Color.FromRgb(0, 0, 255);
             guagePressure.ToColor = Color.FromRgb(255, 0, 0);
-
-
-            InitGraph();
         }
 
         /// <summary>
@@ -84,53 +87,6 @@ namespace WPF_Test
             mqttManager.MessageReceived += MQTTManager_MessageReceived;
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public Func<double, string> Formatter { get; set; }
-
-
-
-        private void InitGraph()
-        {
-            /*
-            var dayConfig = Mappers.Xy<DateModel>()
-    .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
-    .Y(dayModel => dayModel.Value);
-    */
-            var dayConfig = Mappers.Xy<DateModel>()
-.X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(12).Ticks)
-.Y(dayModel => dayModel.Value);
-
-            SeriesCollection = new SeriesCollection(dayConfig)
-            {
-                new LineSeries
-                {
-                    Title = "Temp",
-                    Values = new ChartValues<DateModel>{ },
-                    PointGeometrySize = 15
-                },
-                new LineSeries
-                {
-                    Title = "Humidity",
-                    Values = new ChartValues<DateModel>{ },
-                    PointGeometrySize = 15
-                },
-                new LineSeries
-                {
-                    Title = "Pressure",
-                    Values = new ChartValues<DateModel>{ },
-                    PointGeometrySize = 15
-                }
-            };
-
-            Formatter = value => new System.DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("t");
-
-            DataContext = this;
-        }
-
-
-        // SEE https://lvcharts.net/App/examples/v1/wpf/Constant%20Changes for moving time axis
-
-
         /// <summary>
         /// Event handler for MQTT massage received
         /// </summary>
@@ -144,18 +100,28 @@ namespace WPF_Test
                 guageTemperature.Value = (double)e.Temperature;
                 guagePressure.Value = (double)e.Pressure;
 
-                SeriesCollection[0].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Temperature });
-                SeriesCollection[1].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Humidity });
-                //SeriesCollection[2].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Pressure });
+                /*
+                var now = DateTime.Now;
+                chart.ChartValues.Add(new MeasureModel
+                {
+                    DateTime = now,
+                    Value = (double)e.Temperature
+                });
+
+    */
+
+                //chrtGraphTest.Series[1].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Humidity });
+                //chrtGraphTest.Series[2].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Pressure });
+                
+
+                //SetAxisLimits(now);
+
+                //lets only use the last 150 values
+                //if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
+
+                // TODO: the chartvalues list is updated with the new values but the chart never plots any points? does this need to be wrapped in a usercontrol?
+
             }), (DispatcherPriority)10);
         }
     }
-
-    public class DateModel
-    {
-        public System.DateTime DateTime { get; set; }
-        public double Value { get; set; }
-    }
-
-
 }
