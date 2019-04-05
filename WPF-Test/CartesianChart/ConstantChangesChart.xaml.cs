@@ -53,8 +53,6 @@ namespace Wpf.CartesianChart.ConstantChanges
 
             //The next code simulates data changes every 300 ms
 
-            IsReading = false;
-
             DataContext = this;
         }
 
@@ -82,42 +80,27 @@ namespace Wpf.CartesianChart.ConstantChanges
             }
         }
 
-        public bool IsReading { get; set; }
-
-        private void Read()
+        public void AddData(double value)
         {
-            var r = new Random();
 
-            while (IsReading)
+            var now = DateTime.Now;
+
+            ChartValues.Add(new MeasureModel
             {
-                Thread.Sleep(150);
-                var now = DateTime.Now;
+                DateTime = now,
+                Value = value
+            });
 
-                _trend += r.Next(-8, 10);
+            SetAxisLimits(now);
 
-                ChartValues.Add(new MeasureModel
-                {
-                    DateTime = now,
-                    Value = _trend
-                });
-
-                SetAxisLimits(now);
-
-                //lets only use the last 150 values
-                if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
-            }
+            //lets only use the last 150 values
+            if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
         }
 
         private void SetAxisLimits(DateTime now)
         {
             AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
             AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
-        }
-
-        private void InjectStopOnClick(object sender, RoutedEventArgs e)
-        {
-            IsReading = !IsReading;
-            if (IsReading) Task.Factory.StartNew(Read);
         }
 
         #region INotifyPropertyChanged implementation

@@ -100,6 +100,8 @@ namespace WPF_Test
                 guageTemperature.Value = (double)e.Temperature;
                 guagePressure.Value = (double)e.Pressure;
 
+                chart.AddData((double)e.Humidity);
+
                 /*
                 var now = DateTime.Now;
                 chart.ChartValues.Add(new MeasureModel
@@ -112,7 +114,7 @@ namespace WPF_Test
 
                 //chrtGraphTest.Series[1].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Humidity });
                 //chrtGraphTest.Series[2].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Pressure });
-                
+
 
                 //SetAxisLimits(now);
 

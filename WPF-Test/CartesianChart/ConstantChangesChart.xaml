@@ -12,9 +12,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="InjectStopOnClick">
-            Inject/Stop Data
-        </Button>
+
         <!--Here we disable tooltips and hovering to get a better performance-->
         <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
             <lvc:CartesianChart.Series>
