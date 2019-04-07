@@ -16,17 +16,23 @@
         <!--Here we disable tooltips and hovering to get a better performance-->
         <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding ChartValues}" 
+                <lvc:LineSeries Values="{Binding ChartValuesA}" 
                                 PointGeometry="{x:Null}" 
                                 LineSmoothness="1"
                                 StrokeThickness="6" 
                                 Stroke="#F34336"
                                 Fill="Transparent"/>
+                <lvc:LineSeries Values="{Binding ChartValuesB}" 
+                                PointGeometry="{x:Null}" 
+                                LineSmoothness="1"
+                                ScalesYAt = "1"
+                                StrokeThickness="6" 
+                                Fill="Transparent"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
-                          MaxValue="{Binding AxisMax}" 
-                          MinValue="{Binding AxisMin}"
+                          MaxValue="{Binding AxisXMax}" 
+                          MinValue="{Binding AxisXMin}"
                           Unit="{Binding AxisUnit}">
                     <lvc:Axis.Separator>
                         <lvc:Separator Step="{Binding AxisStep}" />
@@ -34,13 +40,28 @@
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis MaxValue="100" 
-                          MinValue="0">
+                <lvc:Axis Title="{Binding AxisY0Title}" 
+                          FontSize="20"
+                          Position="LeftBottom"
+                          Foreground="Red"
+                          MaxValue="{Binding AxisY0Max}" 
+                          MinValue="{Binding AxisY0Min}">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="10" />
+                        <lvc:Separator Step="{Binding AxisY0Step}" />
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+                <lvc:Axis Title="{Binding AxisY1Title}" 
+                          FontSize="20"
+                          Position="RightTop"
+                          Foreground="Blue"
+                          MaxValue="{Binding AxisY1Max}" 
+                          MinValue="{Binding AxisY1Min}">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="{Binding AxisY1Step}" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisY>
+            <!--Scales at blue axis, Axis[0]-->
         </lvc:CartesianChart>
     </Grid>
 </UserControl>

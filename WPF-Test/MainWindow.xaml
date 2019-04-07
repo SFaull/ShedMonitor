@@ -103,7 +103,8 @@
 
 
         <StackPanel Grid.Column="2" Margin="20">
-            <constantChanges1:ConstantChangesChart x:Name="chart" MinHeight="200" ></constantChanges1:ConstantChangesChart>
+            <constantChanges1:ConstantChangesChart x:Name="graphRHT" MinHeight="350"></constantChanges1:ConstantChangesChart>
+            <constantChanges1:ConstantChangesChart x:Name="graphEnergy" MinHeight="350"></constantChanges1:ConstantChangesChart>
         </StackPanel>
         
         <!--

@@ -10,15 +10,13 @@ namespace WPF_Test
 {
     public class SensorEventArgs : EventArgs
     {
-        public decimal Temperature { private set; get; }
-        public decimal Humidity { private set; get; }
-        public decimal Pressure { private set; get; }
+        public string SensorType { private set; get; }
+        public decimal SensorValue { private set; get; }
 
-        public SensorEventArgs(decimal hum, decimal temp, decimal pressure)
+        public SensorEventArgs(string type, decimal value)
         {
-            Temperature = temp;
-            Humidity = hum;
-            Pressure = pressure;
+            SensorType = type;
+            SensorValue = value;
         }
     }
 
@@ -56,8 +54,12 @@ namespace WPF_Test
 
             // register a callback-function (we have to implement, see below) which is called by the library when a message was received
             client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-            string[] subscriptions = { "ShedMonitor/RawData" };
-            byte[] qos = { 0 };
+            string[] subscriptions = { "ShedMonitor/RawData",
+                                       "ShedMonitor/Temperature",
+                                       "ShedMonitor/Humidity",
+                                       "Shed/Current",
+                                       "Shed/Power"  };
+            byte[] qos = { 0,0,0,0,0 };
             client.Subscribe(subscriptions, qos);
 
             // use a unique id as client id, each time we start the application
@@ -89,9 +91,27 @@ namespace WPF_Test
                 string receivedMessage = Encoding.UTF8.GetString(e.Message);
                 Console.WriteLine("Topic: {0}, Message:{1}", topic, receivedMessage);
 
+                List<string> topicSplit = topic.Split('/').ToList();
+
+                if(topicSplit.Count != 2)
+                {
+                    // unexpected message, discard. TODO: log error
+                    return;
+                }
+
+                string room = topicSplit[0]; // should be either Shed or ShedMonitor - this needs to be made consistent and then checked.
+                string sensorType = topicSplit[1];
+
                 List<string> messages = receivedMessage.Split(',').ToList();
-                List<decimal> readings = messages.Select(s => decimal.Parse(s)).ToList();
-                OnMessageReceived(new SensorEventArgs(readings[0], readings[1], readings[2]));
+                bool conversionSuccess = decimal.TryParse(receivedMessage, out decimal value);
+
+                if(!conversionSuccess)
+                {
+                    // unexpected message, discard. TODO: log error
+                    return;
+                }
+
+                OnMessageReceived(new SensorEventArgs(sensorType, value));
             }
             catch (Exception ex)
             {

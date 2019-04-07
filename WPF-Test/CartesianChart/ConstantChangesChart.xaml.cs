@@ -11,8 +11,17 @@ namespace Wpf.CartesianChart.ConstantChanges
 {
     public partial class ConstantChangesChart : UserControl, INotifyPropertyChanged
     {
-        private double _axisMax;
-        private double _axisMin;
+        private double _axisxMax;
+        private double _axisxMin;
+        private double _axisy0Max;
+        private double _axisy0Min;
+        private double _axisy1Max;
+        private double _axisy1Min;
+        private string _axisy0Title;
+        private string _axisy1Title;
+        private double _axisy0Step;
+        private double _axisy1Step;
+
 
         public ConstantChangesChart()
         {
@@ -39,7 +48,8 @@ namespace Wpf.CartesianChart.ConstantChanges
             
 
             //the values property will store our values array
-            ChartValues = new ChartValues<MeasureModel>();
+            ChartValuesA = new ChartValues<MeasureModel>();
+            ChartValuesB = new ChartValues<MeasureModel>();
 
 
             //lets set how to display the X Labels
@@ -58,36 +68,120 @@ namespace Wpf.CartesianChart.ConstantChanges
             DataContext = this;
         }
 
-        public ChartValues<MeasureModel> ChartValues { get; set; }
+        public ChartValues<MeasureModel> ChartValuesA { get; set; }
+        public ChartValues<MeasureModel> ChartValuesB { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
 
-        public double AxisMax
+        public double AxisXMax
         {
-            get { return _axisMax; }
+            get { return _axisxMax; }
             set
             {
-                _axisMax = value;
-                OnPropertyChanged("AxisMax");
+                _axisxMax = value;
+                OnPropertyChanged("AxisXMax");
             }
         }
-        public double AxisMin
+        public double AxisXMin
         {
-            get { return _axisMin; }
+            get { return _axisxMin; }
             set
             {
-                _axisMin = value;
-                OnPropertyChanged("AxisMin");
+                _axisxMin = value;
+                OnPropertyChanged("AxisXMin");
             }
         }
 
-        public void AddData(double value)
+        public double AxisY0Max
         {
+            get { return _axisy0Max; }
+            set
+            {
+                _axisy0Max = value;
+                OnPropertyChanged("AxisY0Max");
+            }
+        }
+        public double AxisY0Min
+        {
+            get { return _axisy0Min; }
+            set
+            {
+                _axisy0Min = value;
+                OnPropertyChanged("AxisY0Min");
+            }
+        }
+
+        public double AxisY1Max
+        {
+            get { return _axisy1Max; }
+            set
+            {
+                _axisy1Max = value;
+                OnPropertyChanged("AxisY1Max");
+            }
+        }
+        public double AxisY1Min
+        {
+            get { return _axisy1Min; }
+            set
+            {
+                _axisy1Min = value;
+                OnPropertyChanged("AxisY1Min");
+            }
+        }
+
+        public string AxisY0Title
+        {
+            get { return _axisy0Title; }
+            set
+            {
+                _axisy0Title = value;
+                OnPropertyChanged("AxisY0Title");
+            }
+        }
+        public string AxisY1Title
+        {
+            get { return _axisy1Title; }
+            set
+            {
+                _axisy1Title = value;
+                OnPropertyChanged("AxisY1Title");
+            }
+        }
+
+        public double AxisY0Step
+        {
+            get { return _axisy0Step; }
+            set
+            {
+                _axisy0Step = value;
+                OnPropertyChanged("AxisY0Step");
+            }
+        }
+        public double AxisY1Step
+        {
+            get { return _axisy1Step; }
+            set
+            {
+                _axisy1Step = value;
+                OnPropertyChanged("AxisY1Step");
+            }
+        }
+
+        public void AddData(int index,  double value)
+        {
+            ChartValues<MeasureModel> chartValues;
+
+            if (index == 0)
+                chartValues = ChartValuesA;
+            else
+                chartValues = ChartValuesB;
 
             var now = DateTime.Now;
 
-            ChartValues.Add(new MeasureModel
+
+            chartValues.Add(new MeasureModel
             {
                 DateTime = now,
                 Value = value
@@ -96,13 +190,13 @@ namespace Wpf.CartesianChart.ConstantChanges
             SetAxisLimits(now);
 
             //lets only use the last 150 values
-            if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
+            if (chartValues.Count > 150) chartValues.RemoveAt(0);
         }
 
         private void SetAxisLimits(DateTime now)
         {
-            AxisMax = now.Ticks + TimeSpan.FromMinutes(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromMinutes(10).Ticks; // and 60 seconds behind
+            AxisXMax = now.Ticks + TimeSpan.FromMinutes(1).Ticks; // lets force the axis to be 1 second ahead
+            AxisXMin = now.Ticks - TimeSpan.FromMinutes(10).Ticks; // and 60 seconds behind
         }
 
         #region INotifyPropertyChanged implementation

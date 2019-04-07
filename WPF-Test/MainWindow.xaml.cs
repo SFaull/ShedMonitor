@@ -34,22 +34,50 @@ namespace WPF_Test
         private DispatcherTimer clockTimer;
         //private SeriesCollection scol;
 
-        private double _axisMax;
-        private double _axisMin;
-        private double _trend;
-
         public MainWindow()
         {
             InitializeComponent();
             InitializeClock();
             InitializeMQTT();
+            InitializeGuages();
+            InitializeGraphs();
+        }
 
+        private void InitializeGuages()
+        {
             guageHumidity.FromColor = Color.FromRgb(0, 0, 255);
             guageHumidity.ToColor = Color.FromRgb(255, 0, 0);
             guageTemperature.FromColor = Color.FromRgb(0, 0, 255);
             guageTemperature.ToColor = Color.FromRgb(255, 0, 0);
             guagePressure.FromColor = Color.FromRgb(0, 0, 255);
             guagePressure.ToColor = Color.FromRgb(255, 0, 0);
+        }
+
+        private void InitializeGraphs()
+        {
+            // Humidity
+            graphRHT.AxisY0Title = "Humidity (%)";
+            graphRHT.AxisY0Max = 100;
+            graphRHT.AxisY0Min = 0;
+            graphRHT.AxisY0Step = 10;
+
+            // Temperature
+            graphRHT.AxisY1Title = "Temperature (degC)";
+            graphRHT.AxisY1Max = 80;
+            graphRHT.AxisY1Min = -20;
+            graphRHT.AxisY1Step = 10;
+
+            // Current
+            graphEnergy.AxisY0Title = "Current (A)";
+            graphEnergy.AxisY0Max = 15;
+            graphEnergy.AxisY0Min = 0;
+            graphEnergy.AxisY0Step = 1;
+
+            // Power
+            graphEnergy.AxisY1Title = "Power (kW)";
+            graphEnergy.AxisY1Max = 3;
+            graphEnergy.AxisY1Min = 0;
+            graphEnergy.AxisY1Step = 3;
         }
 
         /// <summary>
@@ -70,8 +98,7 @@ namespace WPF_Test
         /// <param name="s"></param>
         /// <param name="a"></param>
         private void UpdateClock(object s, EventArgs a)
-        {
-            
+        {            
             txtClock.Text = "" + DateTime.Now.Hour.ToString("00") + ":"
                                 + DateTime.Now.Minute.ToString("00");
 
@@ -95,35 +122,44 @@ namespace WPF_Test
         /// <param name="e"></param>
         private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
         {
+            Gauge guage;
+            ConstantChangesChart graph;
+            int index; // TODO make this better
+            double value = (double)e.SensorValue;
+
+            switch (e.SensorType)
+            {
+                case "Humidity":
+                    guage = guageHumidity;
+                    graph = graphRHT;
+                    index = 0;
+                    break;
+                case "Temperature":
+                    guage = guageTemperature;
+                    graph = graphRHT;
+                    index = 1;
+                    break;
+                case "Current":
+                    guage = guageCurrent;
+                    graph = graphEnergy;
+                    index = 0;
+                    break;
+                case "Power":
+                    guage = guagePower;
+                    graph = graphEnergy;
+                    value /= 1000;  // reported in watts, lets change it to kW
+                    index = 1;
+                    break;
+                default:
+                    // TODO log error
+                    return;
+            }
+
+            // update the guage and graph
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                guageHumidity.Value = (double)e.Humidity;
-                guageTemperature.Value = (double)e.Temperature;
-                guagePressure.Value = (double)e.Pressure;
-
-                chart.AddData((double)e.Humidity);
-
-                /*
-                var now = DateTime.Now;
-                chart.ChartValues.Add(new MeasureModel
-                {
-                    DateTime = now,
-                    Value = (double)e.Temperature
-                });
-
-    */
-
-                //chrtGraphTest.Series[1].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Humidity });
-                //chrtGraphTest.Series[2].Values.Add(new DateModel {DateTime = System.DateTime.Now, Value = (double)e.Pressure });
-
-
-                //SetAxisLimits(now);
-
-                //lets only use the last 150 values
-                //if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
-
-                // TODO: the chartvalues list is updated with the new values but the chart never plots any points? does this need to be wrapped in a usercontrol?
-
+                guage.Value = value;
+                graph.AddData(index, value);
             }), (DispatcherPriority)10);
         }
     }
