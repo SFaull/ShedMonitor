@@ -17,10 +17,11 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="660" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="800" Width="1280" WindowStartupLocation="CenterScreen">
     <Grid x:Name="gridParent" Margin="10,10">
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -30,48 +31,56 @@
         </Grid.RowDefinitions>
 
 
-        <Grid x:Name="gridChildLeft"  Grid.Column="0" Margin="10,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="20">
+            <!-- <Calendar VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/> -->
+                
+                <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+                <lvc:Gauge  x:Name="guageHumidity" Margin="5" MinHeight="100" MinWidth="100"
+                       Uses360Mode="False"
+                       From="0" To="100" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guageTemperature" MinHeight="100" MinWidth="100"
+                       From="-20" To="60" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
 
-            <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
+                <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guagePressure" Margin="5" MinHeight="100" MinWidth="100"
+                       Uses360Mode="False"
+                       From="0" To="200000" Value="0" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
+
+
+            <materialDesign:Card Padding="32" Margin="16">
                 <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
             </materialDesign:Card>
 
-            <Calendar Grid.Row="1" Grid.Column ="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/>
-        </Grid>
+        </StackPanel>
 
-        <Grid x:Name="gridChildRight" Grid.Column="1" Margin="10,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
- <!--
-            <materialDesign:Card Grid.Row="0" Grid.Column="0" Padding="32" Margin="16">
-                <TextBlock x:Name="txtTemperature" Style="{DynamicResource MaterialDesignTitleTextBlock}">Temperature: </TextBlock>
-            </materialDesign:Card>
-            <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="32" Margin="16">
-                <TextBlock x:Name="txtHumidity"  Style="{DynamicResource MaterialDesignTitleTextBlock}">Humidity:</TextBlock>
-            </materialDesign:Card>
--->
-            
+        <StackPanel Grid.Column="1" Margin="20">
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageHumidity" Grid.Row="0" Grid.Column="0" Margin="5"
-                   Uses360Mode="False"
-                   From="0" To="100" Value="0" >
+            <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="100"
+                       Uses360Mode="False"
+                       From="0" To="13" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="0"></RotateTransform>
@@ -81,9 +90,8 @@
             </lvc:Gauge>
 
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageTemperature" Grid.Row="1" Grid.Column="0" Margin="5"
-                   Uses360Mode="False"
-                   From="-20" To="60" Value="0" >
+            <lvc:Gauge  x:Name="guagePower" MinHeight="100" MinWidth="100"
+                       From="0" To="3" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="0"></RotateTransform>
@@ -91,22 +99,14 @@
                     </TransformGroup>
                 </lvc:Gauge.GaugeRenderTransform>
             </lvc:Gauge>
+        </StackPanel>
 
-            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guagePressure" Grid.Row="2" Grid.Column="0" Margin="5"
-                   Uses360Mode="False"
-                   From="0" To="200000" Value="0" >
-                <lvc:Gauge.GaugeRenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"></RotateTransform>
-                        <ScaleTransform ScaleX="1"></ScaleTransform>
-                    </TransformGroup>
-                </lvc:Gauge.GaugeRenderTransform>
-            </lvc:Gauge>
 
-            <constantChanges1:ConstantChangesChart x:Name="chart" Grid.Row="3" Grid.Column="0"></constantChanges1:ConstantChangesChart>
-
-            <!--
+        <StackPanel Grid.Column="2" Margin="20">
+            <constantChanges1:ConstantChangesChart x:Name="chart" MinHeight="200" ></constantChanges1:ConstantChangesChart>
+        </StackPanel>
+        
+        <!--
             <lvc:CartesianChart x:Name="graphTemperature" Grid.Row="3" Grid.Column="0" Series="{Binding SeriesCollection}" LegendLocation="Right" >
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Temp" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
@@ -118,6 +118,4 @@
             -->
         </Grid>
 
-
-    </Grid>
 </Window>

@@ -13,7 +13,6 @@ namespace Wpf.CartesianChart.ConstantChanges
     {
         private double _axisMax;
         private double _axisMin;
-        private double _trend;
 
         public ConstantChangesChart()
         {
@@ -37,21 +36,24 @@ namespace Wpf.CartesianChart.ConstantChanges
             //lets save the mapper globally.
             Charting.For<MeasureModel>(mapper);
 
+            
+
             //the values property will store our values array
             ChartValues = new ChartValues<MeasureModel>();
 
+
             //lets set how to display the X Labels
-            DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
+            DateTimeFormatter = value => new DateTime((long)value).ToString("hh:mm");
 
             //AxisStep forces the distance between each separator in the X axis
-            AxisStep = TimeSpan.FromSeconds(1).Ticks;
+            AxisStep = TimeSpan.FromMinutes(1).Ticks;
             //AxisUnit forces lets the axis know that we are plotting seconds
             //this is not always necessary, but it can prevent wrong labeling
             AxisUnit = TimeSpan.TicksPerSecond;
 
-            SetAxisLimits(DateTime.Now);
+            
 
-            //The next code simulates data changes every 300 ms
+            SetAxisLimits(DateTime.Now);
 
             DataContext = this;
         }
@@ -99,8 +101,8 @@ namespace Wpf.CartesianChart.ConstantChanges
 
         private void SetAxisLimits(DateTime now)
         {
-            AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
+            AxisMax = now.Ticks + TimeSpan.FromMinutes(1).Ticks; // lets force the axis to be 1 second ahead
+            AxisMin = now.Ticks - TimeSpan.FromMinutes(10).Ticks; // and 60 seconds behind
         }
 
         #region INotifyPropertyChanged implementation

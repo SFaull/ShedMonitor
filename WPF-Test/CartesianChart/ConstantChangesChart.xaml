@@ -33,6 +33,14 @@
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis MaxValue="100" 
+                          MinValue="0">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="10" />
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>
 </UserControl>

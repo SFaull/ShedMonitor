@@ -71,6 +71,7 @@ namespace WPF_Test
         /// <param name="a"></param>
         private void UpdateClock(object s, EventArgs a)
         {
+            
             txtClock.Text = "" + DateTime.Now.Hour.ToString("00") + ":"
                                 + DateTime.Now.Minute.ToString("00");
 
