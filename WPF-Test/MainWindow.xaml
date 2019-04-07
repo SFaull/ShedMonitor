@@ -31,36 +31,38 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
             <!-- <Calendar VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/> -->
-                
-                <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                <lvc:Gauge  x:Name="guageHumidity" Margin="5" MinHeight="100" MinWidth="150"
-                       Uses360Mode="False"
-                       From="0" To="100" Value="0" >
-                    <lvc:Gauge.GaugeRenderTransform>
-                        <TransformGroup>
-                            <RotateTransform Angle="0"></RotateTransform>
-                            <ScaleTransform ScaleX="1"></ScaleTransform>
-                        </TransformGroup>
-                    </lvc:Gauge.GaugeRenderTransform>
-                </lvc:Gauge>
+            <Label HorizontalAlignment="Center">Humidity (%)</Label>
+            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <lvc:Gauge  x:Name="guageHumidity" Margin="5" MinHeight="100" MinWidth="150"
+                    Uses360Mode="False"
+                    From="0" To="100" Value="0" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
 
-                <!--this gauge is rotated 90° and has an inverted clockwise fill-->
+            <Label HorizontalAlignment="Center">Temperature (degC)</Label>
+            <!--this gauge is rotated 90° and has an inverted clockwise fill-->
             <lvc:Gauge  x:Name="guageTemperature" MinHeight="100" MinWidth="150"
-                       From="-20" To="60" Value="0" >
-                    <lvc:Gauge.GaugeRenderTransform>
-                        <TransformGroup>
-                            <RotateTransform Angle="0"></RotateTransform>
-                            <ScaleTransform ScaleX="1"></ScaleTransform>
-                        </TransformGroup>
-                    </lvc:Gauge.GaugeRenderTransform>
-                </lvc:Gauge>
+                    From="-20" To="60" Value="0" >
+                <lvc:Gauge.GaugeRenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="0"></RotateTransform>
+                        <ScaleTransform ScaleX="1"></ScaleTransform>
+                    </TransformGroup>
+                </lvc:Gauge.GaugeRenderTransform>
+            </lvc:Gauge>
 
+            <Label HorizontalAlignment="Center">Pressure (kPa)</Label>
                 <!--this gauge is rotated 90° and has an inverted clockwise fill-->
             <lvc:Gauge  x:Name="guagePressure" Margin="5" MinHeight="100" MinWidth="150"
                        Uses360Mode="False"
-                       From="0" To="200000" Value="0" >
+                       From="0" To="250" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="0"></RotateTransform>
@@ -76,7 +78,8 @@
 -->
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+            <Label HorizontalAlignment="Center">Current (A)</Label>
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
             <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="150"
                        Uses360Mode="False"
@@ -88,7 +91,7 @@
                     </TransformGroup>
                 </lvc:Gauge.GaugeRenderTransform>
             </lvc:Gauge>
-
+            <Label HorizontalAlignment="Center">Power (kW)</Label>
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
             <lvc:Gauge  x:Name="guagePower" MinHeight="100" MinWidth="150"
                        From="0" To="3" Value="0" >

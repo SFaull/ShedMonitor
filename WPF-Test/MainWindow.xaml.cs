@@ -32,7 +32,8 @@ namespace WPF_Test
     {
         private MQTTManager mqttManager;
         private DispatcherTimer clockTimer;
-        //private SeriesCollection scol;
+
+        bool DEBUG = true;  // dont fullscreen unless ready for production
 
         public MainWindow()
         {
@@ -41,8 +42,17 @@ namespace WPF_Test
             InitializeMQTT();
             InitializeGuages();
             InitializeGraphs();
+
+            if (!DEBUG)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+            }
         }
 
+        /// <summary>
+        /// Initialise the visual gauges
+        /// </summary>
         private void InitializeGuages()
         {
             guageHumidity.FromColor = Color.FromRgb(0, 0, 255);
@@ -53,6 +63,9 @@ namespace WPF_Test
             guagePressure.ToColor = Color.FromRgb(255, 0, 0);
         }
 
+        /// <summary>
+        /// Initialise the visual graphs
+        /// </summary>
         private void InitializeGraphs()
         {
             // Humidity
@@ -125,7 +138,7 @@ namespace WPF_Test
         {
             Gauge guage;
             ConstantChangesChart graph;
-            int index; // TODO make this better
+            int index = 0; // TODO make this better
             double value = (double)e.SensorValue;
 
             switch (e.SensorType)
@@ -140,6 +153,14 @@ namespace WPF_Test
                     graph = graphRHT;
                     index = 1;
                     break;
+                case "Pressure":
+                    guage = guagePressure;
+                    value /= 1000;  // reported in Pascals lets change it to kPascals
+                    graph = null;
+                    break;
+                case "Altitude":
+                    // do nothing
+                    return;
                 case "Current":
                     guage = guageCurrent;
                     graph = graphEnergy;
@@ -159,8 +180,11 @@ namespace WPF_Test
             // update the guage and graph
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                guage.Value = value;
-                graph.AddData(index, value);
+                if(guage != null)
+                    guage.Value = value;
+
+                if(graph!=null)
+                    graph.AddData(index, value);
             }), (DispatcherPriority)10);
         }
     }

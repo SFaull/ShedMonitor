@@ -57,9 +57,11 @@ namespace WPF_Test
             string[] subscriptions = { "ShedMonitor/RawData",
                                        "ShedMonitor/Temperature",
                                        "ShedMonitor/Humidity",
+                                       "ShedMonitor/Pressure",
+                                       "ShedMonitor/Altitude",
                                        "Shed/Current",
                                        "Shed/Power"  };
-            byte[] qos = { 0,0,0,0,0 };
+            byte[] qos = { 0,0,0,0,0,0,0 };
             client.Subscribe(subscriptions, qos);
 
             // use a unique id as client id, each time we start the application
