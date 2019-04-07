@@ -22,20 +22,20 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Column="0" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="20">
             <!-- <Calendar VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/> -->
                 
                 <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                <lvc:Gauge  x:Name="guageHumidity" Margin="5" MinHeight="100" MinWidth="100"
+                <lvc:Gauge  x:Name="guageHumidity" Margin="5" MinHeight="100" MinWidth="150"
                        Uses360Mode="False"
                        From="0" To="100" Value="0" >
                     <lvc:Gauge.GaugeRenderTransform>
@@ -47,7 +47,7 @@
                 </lvc:Gauge>
 
                 <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageTemperature" MinHeight="100" MinWidth="100"
+            <lvc:Gauge  x:Name="guageTemperature" MinHeight="100" MinWidth="150"
                        From="-20" To="60" Value="0" >
                     <lvc:Gauge.GaugeRenderTransform>
                         <TransformGroup>
@@ -58,7 +58,7 @@
                 </lvc:Gauge>
 
                 <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guagePressure" Margin="5" MinHeight="100" MinWidth="100"
+            <lvc:Gauge  x:Name="guagePressure" Margin="5" MinHeight="100" MinWidth="150"
                        Uses360Mode="False"
                        From="0" To="200000" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
@@ -69,16 +69,16 @@
                 </lvc:Gauge.GaugeRenderTransform>
             </lvc:Gauge>
 
-
+<!--
             <materialDesign:Card Padding="32" Margin="16">
                 <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
             </materialDesign:Card>
-
+-->
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="20">
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="100"
+            <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="150"
                        Uses360Mode="False"
                        From="0" To="13" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
@@ -90,7 +90,7 @@
             </lvc:Gauge>
 
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-            <lvc:Gauge  x:Name="guagePower" MinHeight="100" MinWidth="100"
+            <lvc:Gauge  x:Name="guagePower" MinHeight="100" MinWidth="150"
                        From="0" To="3" Value="0" >
                 <lvc:Gauge.GaugeRenderTransform>
                     <TransformGroup>
@@ -101,11 +101,9 @@
             </lvc:Gauge>
         </StackPanel>
 
+        <constantChanges1:ConstantChangesChart x:Name="graphRHT" Grid.Column="1" Grid.Row="0" MinHeight="350"></constantChanges1:ConstantChangesChart>
+        <constantChanges1:ConstantChangesChart x:Name="graphEnergy" Grid.Column="1" Grid.Row="1" MinHeight="350"></constantChanges1:ConstantChangesChart>
 
-        <StackPanel Grid.Column="2" Margin="20">
-            <constantChanges1:ConstantChangesChart x:Name="graphRHT" MinHeight="350"></constantChanges1:ConstantChangesChart>
-            <constantChanges1:ConstantChangesChart x:Name="graphEnergy" MinHeight="350"></constantChanges1:ConstantChangesChart>
-        </StackPanel>
         
         <!--
             <lvc:CartesianChart x:Name="graphTemperature" Grid.Row="3" Grid.Column="0" Series="{Binding SeriesCollection}" LegendLocation="Right" >
