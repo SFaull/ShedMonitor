@@ -187,5 +187,11 @@ namespace WPF_Test
                     graph.AddData(index, value);
             }), (DispatcherPriority)10);
         }
+
+        private void btnInfo_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
+        }
     }
 }

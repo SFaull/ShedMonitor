@@ -22,6 +22,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -30,8 +31,19 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10" VerticalAlignment="Bottom">
+            <Button Name="btnInfo"
+              Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+              HorizontalAlignment="Left"
+              ToolTip="MaterialDesignFloatingActionMiniButton" Click="btnInfo_Click">
+                            <materialDesign:PackIcon
+                Kind="Information"
+                Height="24"
+                Width="24"/>
+            </Button>
+        </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="10">
             <!-- <Calendar VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="16"/> -->
             <Label HorizontalAlignment="Center">Humidity (%)</Label>
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
@@ -78,7 +90,7 @@
 -->
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
             <Label HorizontalAlignment="Center">Current (A)</Label>
             <!--this gauge is rotated 90° and has an inverted clockwise fill-->
             <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="150"
@@ -104,8 +116,8 @@
             </lvc:Gauge>
         </StackPanel>
 
-        <constantChanges1:ConstantChangesChart x:Name="graphRHT" Grid.Column="1" Grid.Row="0" MinHeight="350"></constantChanges1:ConstantChangesChart>
-        <constantChanges1:ConstantChangesChart x:Name="graphEnergy" Grid.Column="1" Grid.Row="1" MinHeight="350"></constantChanges1:ConstantChangesChart>
+        <constantChanges1:ConstantChangesChart x:Name="graphRHT" Grid.Column="2" Grid.Row="0" MinHeight="350"></constantChanges1:ConstantChangesChart>
+        <constantChanges1:ConstantChangesChart x:Name="graphEnergy" Grid.Column="2" Grid.Row="1" MinHeight="350"></constantChanges1:ConstantChangesChart>
 
         
         <!--
