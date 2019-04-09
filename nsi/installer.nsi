@@ -120,12 +120,12 @@ CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME} Website.lnk" "$INSTDIR\${APP_
 !endif
 
 !ifndef REG_START_MENU
-CreateDirectory "$SMPROGRAMS\PRP"
-CreateShortCut "$SMPROGRAMS\PRP\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
+CreateDirectory "$SMPROGRAMS\${COMP_NAME}"
+CreateShortCut "$SMPROGRAMS\${COMP_NAME}\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
 CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
 !ifdef WEB_SITE
 WriteIniStr "$INSTDIR\${APP_NAME} website.url" "InternetShortcut" "URL" "${WEB_SITE}"
-CreateShortCut "$SMPROGRAMS\PRP\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
+CreateShortCut "$SMPROGRAMS\${COMP_NAME}\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
 !endif
 !endif
 
@@ -181,13 +181,13 @@ RmDir "$SMPROGRAMS\$SM_Folder"
 !endif
 
 !ifndef REG_START_MENU
-Delete "$SMPROGRAMS\PRP\${APP_NAME}.lnk"
+Delete "$SMPROGRAMS\${COMP_NAME}\${APP_NAME}.lnk"
 !ifdef WEB_SITE
-Delete "$SMPROGRAMS\PRP\${APP_NAME} Website.lnk"
+Delete "$SMPROGRAMS\${COMP_NAME}\${APP_NAME} Website.lnk"
 !endif
 Delete "$DESKTOP\${APP_NAME}.lnk"
 
-RmDir "$SMPROGRAMS\PRP"
+RmDir "$SMPROGRAMS\${COMP_NAME}"
 !endif
 
 DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
