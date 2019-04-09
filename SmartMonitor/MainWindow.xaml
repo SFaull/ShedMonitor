@@ -17,7 +17,7 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="SmartMonitor" Height="800" Width="1280" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        Title="SmartMonitor" Height="800" Width="1280" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Icon="icon.ico">
     <Grid x:Name="gridParent" Margin="10,10">
 
         <Grid.ColumnDefinitions>
