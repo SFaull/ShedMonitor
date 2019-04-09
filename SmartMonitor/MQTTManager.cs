@@ -44,6 +44,11 @@ namespace SmartMonitorApp
         /// </summary>
         public MQTTManager()
         {
+           
+        }
+
+        ~MQTTManager()
+        {
 
         }
 
@@ -68,6 +73,11 @@ namespace SmartMonitorApp
             clientId = Guid.NewGuid().ToString();
 
             client.Connect(clientId, username, password);
+        }
+
+        public void Disconnect()
+        {
+            client.Disconnect();
         }
 
         public bool Publish(string topic, string message)

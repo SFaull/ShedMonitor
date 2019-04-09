@@ -35,6 +35,9 @@ namespace SmartMonitorApp
 
         bool DEBUG = true;  // dont fullscreen unless ready for production
 
+        /// <summary>
+        /// Constructor for Main Window
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +52,7 @@ namespace SmartMonitorApp
                 WindowStyle = WindowStyle.None;
             }
         }
+
 
         /// <summary>
         /// Initialise the visual gauges
@@ -188,10 +192,36 @@ namespace SmartMonitorApp
             }), (DispatcherPriority)10);
         }
 
+        /// <summary>
+        /// Handler for Information button clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
             AboutBox aboutBox = new AboutBox();
             aboutBox.ShowDialog();
+        }
+
+        /// <summary>
+        /// Handler for Window close event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (clockTimer != null)
+            {
+                clockTimer.Stop();
+                clockTimer = null;
+            }
+
+            if (mqttManager != null)
+            {
+                mqttManager.MessageReceived -= MQTTManager_MessageReceived;
+                mqttManager.Disconnect();
+                mqttManager = null;
+            }
         }
     }
 }
