@@ -33,11 +33,22 @@
 
         <StackPanel Grid.Column="0" Grid.Row="1" Margin="10" VerticalAlignment="Bottom">
             <Button Name="btnInfo"
+              Margin="0,10,0,10"
               Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
               HorizontalAlignment="Left"
               ToolTip="MaterialDesignFloatingActionMiniButton" Click="btnInfo_Click">
                             <materialDesign:PackIcon
                 Kind="Information"
+                Height="24"
+                Width="24"/>
+            </Button>
+            <Button Name="btnFullScreen"
+              Margin="0,10,0,10"
+              Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+              HorizontalAlignment="Left"
+              ToolTip="MaterialDesignFloatingActionMiniButton" Click="btnFullScreen_Click">
+                <materialDesign:PackIcon
+                Kind="Fullscreen"
                 Height="24"
                 Width="24"/>
             </Button>

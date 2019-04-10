@@ -33,8 +33,6 @@ namespace SmartMonitorApp
         private MQTTManager mqttManager;
         private DispatcherTimer clockTimer;
 
-        bool DEBUG = true;  // dont fullscreen unless ready for production
-
         /// <summary>
         /// Constructor for Main Window
         /// </summary>
@@ -45,12 +43,6 @@ namespace SmartMonitorApp
             InitializeMQTT();
             InitializeGuages();
             InitializeGraphs();
-
-            if (!DEBUG)
-            {
-                WindowState = WindowState.Maximized;
-                WindowStyle = WindowStyle.None;
-            }
         }
 
 
@@ -221,6 +213,20 @@ namespace SmartMonitorApp
                 mqttManager.MessageReceived -= MQTTManager_MessageReceived;
                 mqttManager.Disconnect();
                 mqttManager = null;
+            }
+        }
+
+        private void btnFullScreen_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
             }
         }
     }
