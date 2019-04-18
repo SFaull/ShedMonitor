@@ -29,12 +29,28 @@
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Window.Triggers>
+    
+    
+
     <Grid Background="#FFDEDEDE">
         <Grid x:Name="GridMain" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="740" Width="1210"/>
+
+        <materialDesign:DialogHost CloseOnClickAway="True">
+            <materialDesign:DialogHost.DialogContentTemplate>
+                <DataTemplate DataType="local:Alarm">
+                    <StackPanel Margin="0" Background="Red">
+                        <TextBlock Text="{Binding AlarmType}" FontSize="40" HorizontalAlignment="Center" Margin="20,40,20,20"/>
+                        <TextBlock Text="{Binding AlarmDescription}" FontSize="30" Margin="20,40,20,20"/>
+                    </StackPanel>
+                </DataTemplate>
+            </materialDesign:DialogHost.DialogContentTemplate>
+        </materialDesign:DialogHost>
+
         <Grid Height="60" VerticalAlignment="Top" Background="#FF5C99D6">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
             </Grid.Effect>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="vx.x.x" VerticalAlignment="Center" FontSize="16"/>
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
@@ -44,12 +60,16 @@
                         <Button Content="Settings" Click="PopupBox_ItemSelected"/>
                         <Button Content="Help" Click="PopupBox_ItemSelected"/>
                         <Separator/>
+                        <Button Content="Test" Click="PopupBox_ItemSelected"/>
+                        <Separator/>
                         <Button Content="Close" Click="PopupBox_ItemSelected"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
+
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Smart Monitoring Panel</TextBlock>
         </Grid>
+
         <Grid x:Name="GridMenu" Width="70" HorizontalAlignment="Left" Background="#FF31577E">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE"/>

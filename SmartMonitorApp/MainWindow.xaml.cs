@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Wpf.CartesianChart.ConstantChanges;
 
 namespace SmartMonitorApp
@@ -114,6 +116,9 @@ namespace SmartMonitorApp
                 case "Help":
                     MessageBox.Show("Help Page Not Implemented");
                     break;
+                case "Test":
+                    EnableAlarmAsync();
+                    break;
                 case "Close":
                     this.Close();
                     break;
@@ -130,6 +135,7 @@ namespace SmartMonitorApp
         {
             mqttManager = new MQTTManager();
             mqttManager.Connect();
+            mqttManager.MessageReceived += MQTTManager_MessageReceived;
         }
 
         /// <summary>
@@ -144,6 +150,37 @@ namespace SmartMonitorApp
                 mqttManager.Disconnect();
                 mqttManager = null;
             }
+        }
+
+        /// <summary>
+        /// Event handler for MQTT massage received
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
+        {
+            if (e.SensorType == "Current")
+            {
+                if (e.SensorValue > 12)
+                    EnableAlarmAsync();
+            }
+        }
+
+        // for info on dialog boxes, see https://intellitect.com/material-design-in-xaml-dialog-host/
+        private async Task EnableAlarmAsync()
+        {
+            var alarm = new Alarm()
+            {
+                AlarmType = "Over Current Alarm!",
+                AlarmDescription = "Current has exceeded the alarm threshold"
+            };
+            await DialogHost.Show(alarm);
+        }
+
+        public class Alarm
+        {
+            public string AlarmType { get; set; }
+            public string AlarmDescription { get; set; }
         }
     }
 }
