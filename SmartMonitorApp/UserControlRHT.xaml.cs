@@ -20,8 +20,6 @@ namespace SmartMonitorApp
 {
     public partial class UserControlRHT : UserControl
     {
-        private MQTTManager mqttManager;
-
         public UserControlRHT()
         {
             InitializeComponent();
@@ -72,25 +70,13 @@ namespace SmartMonitorApp
             graphEnergy.AxisY1Step = 3;
         }
 
-        public void ImportMQTT(MQTTManager _mqttManager)
-        {
-            mqttManager = _mqttManager;
-            mqttManager.MessageReceived += MQTTManager_MessageReceived;
-        }
-
-        /// <summary>
-        /// Event handler for MQTT massage received
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
+        public void UpdateSensorValue(string sensorType, double value)
         {
             Gauge guage;
             ConstantChangesChart graph;
             int index = 0; // TODO make this better
-            double value = (double)e.SensorValue;
 
-            switch (e.SensorType)
+            switch (sensorType)
             {
                 case "Humidity":
                     guage = guageHumidity;

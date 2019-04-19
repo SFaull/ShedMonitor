@@ -33,16 +33,14 @@ namespace SmartMonitorApp
         {
             InitializeComponent();
             InitializeMQTT();
-            InitialiseUserControls();
+            InitializeUserControls();
         }
 
-        private void InitialiseUserControls()
+        private void InitializeUserControls()
         {
             userControlHome = new UserControlHome();
             userControlRHT = new UserControlRHT();
             userControlEnergy = new UserControlEnergy();
-
-            ((UserControlRHT)userControlRHT).ImportMQTT(mqttManager);
         }
 
         /// <summary>
@@ -117,7 +115,7 @@ namespace SmartMonitorApp
                     MessageBox.Show("Help Page Not Implemented");
                     break;
                 case "Test":
-                    EnableAlarmAsync();
+                    EnableAlarm(true);
                     break;
                 case "Close":
                     this.Close();
@@ -159,24 +157,58 @@ namespace SmartMonitorApp
         /// <param name="e"></param>
         private void MQTTManager_MessageReceived(object sender, SensorEventArgs e)
         {
-            if (e.SensorType == "Current")
+            double value = (double)e.SensorValue;
+            string sensorType = e.SensorType;
+            
+            // determine which usercontrol to update based on the sensortype
+            switch (sensorType)
             {
-                if (e.SensorValue > 12)
-                    EnableAlarmAsync();
+                case "Humidity":
+                case "Temperature":
+                case "Pressure":
+                case "Altitude":
+                case "Power":
+                case "Current":
+                    ((UserControlRHT)userControlRHT).UpdateSensorValue(sensorType, value);
+                    break;
+                default:
+                    Console.WriteLine("Unknown Sensor Type: {0}", sensorType);
+                    break;
             }
+
+            // special sensor types which require alarms
+            if (sensorType.Equals("Current"))
+               EnableAlarm(value > 10); // Enforce a 10A alarm threshold
+
         }
 
-        // for info on dialog boxes, see https://intellitect.com/material-design-in-xaml-dialog-host/
-        private async Task EnableAlarmAsync()
+        /// <summary>
+        /// for info on dialog boxes, see https://intellitect.com/material-design-in-xaml-dialog-host/
+        /// </summary>
+        /// <returns></returns>
+        private void EnableAlarm(bool enable)
         {
             var alarm = new Alarm()
             {
                 AlarmType = "Over Current Alarm!",
                 AlarmDescription = "Current has exceeded the alarm threshold"
             };
-            await DialogHost.Show(alarm);
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (enable)
+                    DialogHost.Show(alarm);
+                else
+                    DialogHost.CloseDialogCommand.Execute(null, null);
+            }), (DispatcherPriority)10);
+            
         }
 
+
+
+        /// <summary>
+        /// Alarm object (type and alarm description)
+        /// </summary>
         public class Alarm
         {
             public string AlarmType { get; set; }
