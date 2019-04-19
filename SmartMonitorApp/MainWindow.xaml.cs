@@ -197,9 +197,15 @@ namespace SmartMonitorApp
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 if (enable)
+                {
                     DialogHost.Show(alarm);
+                    Audio.PlayLoop();
+                }
                 else
+                {
                     DialogHost.CloseDialogCommand.Execute(null, null);
+                    Audio.StopLoop();
+                }
             }), (DispatcherPriority)10);
             
         }
