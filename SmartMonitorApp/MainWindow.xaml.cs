@@ -35,6 +35,9 @@ namespace SmartMonitorApp
             InitClock();
             InitializeMQTT();
             InitializeUserControls();
+
+            // set default page
+            GridMain.Children.Add(userControlRHT);
         }
 
         private void InitializeUserControls()
