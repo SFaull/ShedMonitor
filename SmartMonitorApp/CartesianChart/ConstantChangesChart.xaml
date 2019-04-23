@@ -31,6 +31,7 @@
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                          FontSize="20"
                           MaxValue="{Binding AxisXMax}" 
                           MinValue="{Binding AxisXMin}"
                           Unit="{Binding AxisUnit}">

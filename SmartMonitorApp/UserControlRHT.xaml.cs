@@ -75,6 +75,7 @@ namespace SmartMonitorApp
             Gauge guage;
             ConstantChangesChart graph;
             int index = 0; // TODO make this better
+            string tmp;
 
             switch (sensorType)
             {
@@ -91,6 +92,8 @@ namespace SmartMonitorApp
                 case "Pressure":
                     guage = guagePressure;
                     value /= 1000;  // reported in Pascals lets change it to kPascals
+                    tmp = value.ToString("F2"); // FIXME: hack to set precision to 2 dp...
+                    value = Convert.ToDouble(tmp);
                     graph = null;
                     break;
                 case "Altitude":
@@ -105,6 +108,8 @@ namespace SmartMonitorApp
                     guage = guagePower;
                     graph = graphEnergy;
                     value /= 1000;  // reported in watts, lets change it to kW
+                    tmp = value.ToString("F2"); // FIXME: hack to set precision to 2 dp...
+                    value = Convert.ToDouble(tmp);
                     index = 1;
                     break;
                 default:

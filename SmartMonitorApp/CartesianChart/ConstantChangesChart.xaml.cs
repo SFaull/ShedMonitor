@@ -22,6 +22,10 @@ namespace Wpf.CartesianChart.ConstantChanges
         private double _axisy0Step;
         private double _axisy1Step;
 
+        private int MaxPoints = 150;
+
+        // TODO: this graph should scale based on the amount of data received (up to ~12hrs)
+
 
         public ConstantChangesChart()
         {
@@ -56,7 +60,7 @@ namespace Wpf.CartesianChart.ConstantChanges
             DateTimeFormatter = value => new DateTime((long)value).ToString("hh:mm");
 
             //AxisStep forces the distance between each separator in the X axis
-            AxisStep = TimeSpan.FromMinutes(1).Ticks;
+            AxisStep = TimeSpan.FromHours(1).Ticks;
             //AxisUnit forces lets the axis know that we are plotting seconds
             //this is not always necessary, but it can prevent wrong labeling
             AxisUnit = TimeSpan.TicksPerSecond;
@@ -190,13 +194,26 @@ namespace Wpf.CartesianChart.ConstantChanges
             SetAxisLimits(now);
 
             //lets only use the last 150 values
-            if (chartValues.Count > 150) chartValues.RemoveAt(0);
+            if (chartValues.Count > MaxPoints) chartValues.RemoveAt(0);
         }
 
         private void SetAxisLimits(DateTime now)
         {
-            AxisXMax = now.Ticks + TimeSpan.FromMinutes(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisXMin = now.Ticks - TimeSpan.FromMinutes(10).Ticks; // and 60 seconds behind
+            now = RoundUp(now);
+            AxisXMax = now.Ticks /*+ TimeSpan.FromMinutes(1).Ticks*/; // lets force the axis to be 1 second ahead
+            AxisXMin = now.Ticks - TimeSpan.FromHours(12).Ticks; // and 12 hours behind
+        }
+
+        /// <summary>
+        /// Rounds up to the nearest hour
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime RoundUp(DateTime dateTime)
+        {
+            var updated = dateTime.AddMinutes(60);
+            return new DateTime(updated.Year, updated.Month, updated.Day,
+                                 updated.Hour, 0, 0, dateTime.Kind);
         }
 
         #region INotifyPropertyChanged implementation
