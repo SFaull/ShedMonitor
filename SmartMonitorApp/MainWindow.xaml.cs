@@ -32,6 +32,7 @@ namespace SmartMonitorApp
         public MainWindow()
         {
             InitializeComponent();
+            InitClock();
             InitializeMQTT();
             InitializeUserControls();
         }
@@ -41,6 +42,21 @@ namespace SmartMonitorApp
             userControlHome = new UserControlHome();
             userControlRHT = new UserControlRHT();
             userControlEnergy = new UserControlEnergy();
+        }
+
+        public void InitClock()
+        {
+            UpdateClock(null, null);
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(200);
+            timer.Tick += new EventHandler(UpdateClock);
+            timer.Start();
+        }
+
+
+        void UpdateClock(object sender, EventArgs e)
+        {
+            txtTime.Text = DateTime.Now.ToString();
         }
 
         /// <summary>

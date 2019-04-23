@@ -52,7 +52,7 @@
             </Grid.Effect>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="vx.x.x" VerticalAlignment="Center" FontSize="16"/>
+                <TextBlock x:Name="txtTime" VerticalAlignment="Center" FontSize="28"/>
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
                     <StackPanel Width="150">
                         <Button Content="FullScreen" Click="PopupBox_ItemSelected"/>

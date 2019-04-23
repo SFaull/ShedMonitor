@@ -127,10 +127,6 @@
                 </StackPanel>
             </materialDesign:Card>
 
-            <materialDesign:Card Padding="2" Margin="2">
-                <TextBlock Grid.Row="0" Grid.Column ="1"  x:Name="txtClock" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" FontSize="54" TextAlignment="Center" Height="Auto" Width="Auto" HorizontalAlignment="Center"/>
-            </materialDesign:Card>
-
         </StackPanel>
 
         <materialDesign:Card Grid.Column="3" Grid.Row="0" Padding="2" Margin="2"  VerticalAlignment="Stretch">
