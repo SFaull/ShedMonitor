@@ -61,7 +61,7 @@ namespace SmartMonitorApp
             graphEnergy.AxisY0Title = "Current (A)";
             graphEnergy.AxisY0Max = 15;
             graphEnergy.AxisY0Min = 0;
-            graphEnergy.AxisY0Step = 1;
+            graphEnergy.AxisY0Step = 2;
 
             // Power
             graphEnergy.AxisY1Title = "Power (kW)";

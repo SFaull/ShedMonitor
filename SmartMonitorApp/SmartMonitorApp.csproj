@@ -76,6 +76,9 @@
     <Compile Include="Guages\Gauge360.xaml.cs">
       <DependentUpon>Gauge360.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Guages\GuageCard.xaml.cs">
+      <DependentUpon>GuageCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MQTTManager.cs" />
     <Compile Include="UserControlEnergy.xaml.cs">
       <DependentUpon>UserControlEnergy.xaml</DependentUpon>
@@ -93,6 +96,10 @@
     <Page Include="Guages\Gauge360.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Guages\GuageCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
