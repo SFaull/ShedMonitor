@@ -18,7 +18,7 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             Height="740" Width="1210"
+             MinHeight="740" MinWidth="1210"
              FontSize="20"
              >
     <Grid x:Name="gridParent" Margin="10,10">

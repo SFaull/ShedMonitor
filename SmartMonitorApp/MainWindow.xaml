@@ -33,7 +33,7 @@
     
 
     <Grid Background="#FFDEDEDE">
-        <Grid x:Name="GridMain" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="740" Width="1210"/>
+        <Grid x:Name="GridMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="70,60,0,0"/>
 
         <materialDesign:DialogHost CloseOnClickAway="True">
             <materialDesign:DialogHost.DialogContentTemplate>
@@ -55,7 +55,7 @@
                 <TextBlock x:Name="txtTime" VerticalAlignment="Center" FontSize="24"/>
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
                     <StackPanel Width="150">
-                        <Button Content="FullScreen" Click="PopupBox_ItemSelected"/>
+                        <Button Content="Toggle FullScreen" Click="PopupBox_ItemSelected"/>
                         <Separator/>
                         <Button Content="Settings" Click="PopupBox_ItemSelected"/>
                         <Button Content="Help" Click="PopupBox_ItemSelected"/>

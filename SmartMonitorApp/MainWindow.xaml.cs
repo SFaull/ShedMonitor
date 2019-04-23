@@ -124,8 +124,11 @@ namespace SmartMonitorApp
 
             switch(button.Content)
             {
-                case "FullScreen":
-                    MessageBox.Show("Fullscreen Not Implemented");  // TODO hide top and left navbars and fullscreen
+                case "Toggle FullScreen":
+                    if (WindowState != WindowState.Maximized)
+                        WindowState = WindowState.Maximized;
+                    else
+                        WindowState = WindowState.Normal;
                     break;
                 case "Settings":
                     MessageBox.Show("Settings Page Not Implemented");
