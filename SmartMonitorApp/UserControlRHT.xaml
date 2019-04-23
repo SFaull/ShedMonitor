@@ -19,121 +19,112 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              Height="740" Width="1210"
+             FontSize="20"
              >
     <Grid x:Name="gridParent" Margin="10,10">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="2" VerticalAlignment="Stretch">
-            <materialDesign:Card Padding="2" Margin="2" VerticalAlignment="Stretch">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Humidity (%)</Label>
-                    <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                    <lvc:Gauge  x:Name="guageHumidity" Margin="5,0,5,15" MinHeight="75"
-                            Uses360Mode="False"
-                            From="0" To="100" Value="0" >
-                        <lvc:Gauge.GaugeRenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="0"></RotateTransform>
-                                <ScaleTransform ScaleX="1"></ScaleTransform>
-                            </TransformGroup>
-                        </lvc:Gauge.GaugeRenderTransform>
-                    </lvc:Gauge>
-                </StackPanel>
-            </materialDesign:Card>
+
+        <materialDesign:Card Grid.Column="0" Grid.Row="0" Padding="2" Margin="2" VerticalAlignment="Stretch">
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Humidity (%)</Label>
+                <lvc:Gauge  x:Name="guageHumidity" Margin="2"
+                        Uses360Mode="False"
+                        From="0" To="100" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
+            </DockPanel>
+        </materialDesign:Card>
 
 
-            <materialDesign:Card Padding="2" Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Temperature (degC)</Label>
-                    <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                    <lvc:Gauge  x:Name="guageTemperature"  Margin="5,0,5,15" MinHeight="75"
-                            From="-20" To="60" Value="0" >
-                        <lvc:Gauge.GaugeRenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="0"></RotateTransform>
-                                <ScaleTransform ScaleX="1"></ScaleTransform>
-                            </TransformGroup>
-                        </lvc:Gauge.GaugeRenderTransform>
-                    </lvc:Gauge>
-                </StackPanel>
-            </materialDesign:Card>
+        <materialDesign:Card Grid.Column="0" Grid.Row="1" Padding="2" Margin="2" VerticalAlignment="Stretch">
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Temperature (°C)</Label>
+                <lvc:Gauge  x:Name="guageTemperature"  Margin="2"
+                        From="-20" To="60" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
+            </DockPanel>
+        </materialDesign:Card>
 
 
-            
-        </StackPanel>
-
-        <StackPanel Grid.Column="2" Grid.Row="0" Margin="2">
-            <materialDesign:Card Padding="2" Margin="2">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Pressure (kPa)</Label>
-                    <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                    <lvc:Gauge  x:Name="guagePressure" Margin="5,0,5,2" MinHeight="100" MinWidth="150"
+        <materialDesign:Card Grid.Column="1" Grid.Row="0" Padding="2" Margin="2" VerticalAlignment="Stretch">
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Pressure (kPa)</Label>
+                <lvc:Gauge  x:Name="guagePressure" Margin="2"
                                Uses360Mode="False"
                                From="0" To="250" Value="0" >
-                        <lvc:Gauge.GaugeRenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="0"></RotateTransform>
-                                <ScaleTransform ScaleX="1"></ScaleTransform>
-                            </TransformGroup>
-                        </lvc:Gauge.GaugeRenderTransform>
-                    </lvc:Gauge>
-                </StackPanel>
-            </materialDesign:Card>
-        </StackPanel>
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
+            </DockPanel>
+        </materialDesign:Card>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="2">
+        <materialDesign:Card Grid.Column="0" Grid.Row="2" Padding="2" Margin="2" VerticalAlignment="Stretch">
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Current (A)</Label>
+                <lvc:Gauge  x:Name="guageCurrent" Margin="2"
+                            Uses360Mode="False"
+                            From="0" To="13" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
+            </DockPanel>
+        </materialDesign:Card>
 
-            <materialDesign:Card Padding="2" Margin="2">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Current (A)</Label>
-                    <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                    <lvc:Gauge  x:Name="guageCurrent" Margin="5" MinHeight="100" MinWidth="150"
-                               Uses360Mode="False"
-                               From="0" To="13" Value="0" >
-                        <lvc:Gauge.GaugeRenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="0"></RotateTransform>
-                                <ScaleTransform ScaleX="1"></ScaleTransform>
-                            </TransformGroup>
-                        </lvc:Gauge.GaugeRenderTransform>
-                    </lvc:Gauge>
-                </StackPanel>
-            </materialDesign:Card>
+        <materialDesign:Card Grid.Column="0" Grid.Row="3"  Padding="2" Margin="2" VerticalAlignment="Stretch">
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Power (kW)</Label>
+                <lvc:Gauge  x:Name="guagePower" Margin="2"
+                            From="0" To="3" Value="0" >
+                    <lvc:Gauge.GaugeRenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"></RotateTransform>
+                            <ScaleTransform ScaleX="1"></ScaleTransform>
+                        </TransformGroup>
+                    </lvc:Gauge.GaugeRenderTransform>
+                </lvc:Gauge>
+            </DockPanel>
+        </materialDesign:Card>
 
-            <materialDesign:Card Padding="2" Margin="2">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Power (kW)</Label>
-                    <!--this gauge is rotated 90° and has an inverted clockwise fill-->
-                    <lvc:Gauge  x:Name="guagePower" MinHeight="100" MinWidth="150"
-                               From="0" To="3" Value="0" >
-                        <lvc:Gauge.GaugeRenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="0"></RotateTransform>
-                                <ScaleTransform ScaleX="1"></ScaleTransform>
-                            </TransformGroup>
-                        </lvc:Gauge.GaugeRenderTransform>
-                    </lvc:Gauge>
-                </StackPanel>
-            </materialDesign:Card>
-
-        </StackPanel>
-
-        <materialDesign:Card Grid.Column="3" Grid.Row="0" Padding="2" Margin="2"  VerticalAlignment="Stretch">
+        <materialDesign:Card Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Padding="2" Margin="2"  VerticalAlignment="Stretch">
             <constantChanges1:ConstantChangesChart x:Name="graphRHT"></constantChanges1:ConstantChangesChart>
         </materialDesign:Card>
 
-        <materialDesign:Card Grid.Column="3" Grid.Row="1" Padding="2" Margin="2" VerticalAlignment="Stretch">
+        <materialDesign:Card Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" Padding="2" Margin="2" VerticalAlignment="Stretch">
             <constantChanges1:ConstantChangesChart x:Name="graphEnergy" ></constantChanges1:ConstantChangesChart>
         </materialDesign:Card>
 
