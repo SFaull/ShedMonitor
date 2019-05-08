@@ -24,9 +24,8 @@ namespace SmartMonitorApp
     {
         MqttClient client;
         private string clientId;
-        private static string username = "jnozycds";
-        private static string password = "VYjomWiuoISU";
-        private static int port = Convert.ToInt32(16601);
+        private static int Port = Convert.ToInt32(16601);
+        const string BrokerAddress = "m21.cloudmqtt.com";
 
         #region Events
 
@@ -52,10 +51,9 @@ namespace SmartMonitorApp
 
         }
 
-        public void Connect()
+        public bool Connect(string username, string password)
         {
-            string BrokerAddress = "m21.cloudmqtt.com";
-            client = new MqttClient(BrokerAddress, port, false, null, null, MqttSslProtocols.None);
+            client = new MqttClient(BrokerAddress, Port, false, null, null, MqttSslProtocols.None);
 
             // register a callback-function (we have to implement, see below) which is called by the library when a message was received
             client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
@@ -72,7 +70,9 @@ namespace SmartMonitorApp
             // use a unique id as client id, each time we start the application
             clientId = Guid.NewGuid().ToString();
 
-            client.Connect(clientId, username, password);
+            byte retVal = client.Connect(clientId, username, password);
+            Console.WriteLine("Connect error: " + retVal);
+            return (retVal == 0);
         }
 
         public void Disconnect()

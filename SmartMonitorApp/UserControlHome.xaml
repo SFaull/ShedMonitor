@@ -3,10 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:SmartMonitorApp"
              mc:Ignorable="d" 
-             Background="Aquamarine">
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             MinHeight="740" MinWidth="1210"
+             FontSize="20">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Padding="32" Margin="16" Grid.Row="0">
+            <StackPanel>
+                <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">Username:</TextBlock>
+                <TextBox x:Name="txtUsername"></TextBox>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <materialDesign:Card Padding="32" Margin="16" Grid.Row="1">
+            <StackPanel>
+                <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">Password:</TextBlock>
+                <PasswordBox x:Name="txtPassword"></PasswordBox>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <Button x:Name="btnConnect" Grid.Row="3" Padding="32" Margin="16" Height="Auto" Click="btnConnect_Click">
+            Apply (restart required)
+        </Button>
     </Grid>
 </UserControl>

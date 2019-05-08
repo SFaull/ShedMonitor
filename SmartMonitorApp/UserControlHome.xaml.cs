@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartMonitorApp.Properties;
 
 namespace SmartMonitorApp
 {
@@ -20,6 +21,16 @@ namespace SmartMonitorApp
         public UserControlHome()
         {
             InitializeComponent();
+            txtUsername.Text = Settings.Default.MqttUsername;
+            txtPassword.Password = Settings.Default.MqttPassword;
+        }
+
+        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            // for now just apply
+            Settings.Default.MqttUsername = txtUsername.Text;
+            Settings.Default.MqttPassword = txtPassword.Password;
+            Settings.Default.Save();
         }
     }
 }

@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Wpf.CartesianChart.ConstantChanges;
+using SmartMonitorApp.Properties;
 
 namespace SmartMonitorApp
 {
@@ -37,7 +38,7 @@ namespace SmartMonitorApp
             InitializeUserControls();
 
             // set default page
-            GridMain.Children.Add(userControlRHT);
+            GridMain.Children.Add(userControlHome);
         }
 
         private void InitializeUserControls()
@@ -154,8 +155,11 @@ namespace SmartMonitorApp
         private void InitializeMQTT()
         {
             mqttManager = new MQTTManager();
-            mqttManager.Connect();
-            mqttManager.MessageReceived += MQTTManager_MessageReceived;
+            bool connected = mqttManager.Connect(Settings.Default.MqttUsername, Settings.Default.MqttPassword);
+            if (connected)
+                mqttManager.MessageReceived += MQTTManager_MessageReceived;
+            else
+                DisconnectMQTT();
         }
 
         /// <summary>
@@ -164,6 +168,12 @@ namespace SmartMonitorApp
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            DisconnectMQTT();
+        }
+
+
+        private void DisconnectMQTT()
         {
             if (mqttManager != null)
             {
