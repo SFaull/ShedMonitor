@@ -22,7 +22,7 @@ namespace SmartMonitorApp
 
     public class MQTTManager
     {
-        MqttClient client;
+        private MqttClient client;
         private string clientId;
         private static int Port = Convert.ToInt32(16601);
         const string BrokerAddress = "m21.cloudmqtt.com";
@@ -38,21 +38,36 @@ namespace SmartMonitorApp
 
         #endregion
 
+        private static  MQTTManager instance;
+
+        public static MQTTManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new MQTTManager();
+                return instance;
+            }
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public MQTTManager()
+        private MQTTManager()
         {
-           
+            // Prevent outside instantiation
         }
 
         ~MQTTManager()
         {
-
+            Console.WriteLine("MQTTManager Disposed");
         }
 
         public bool Connect(string username, string password)
         {
+            if (this.IsConnected())
+                this.Disconnect();
+
             client = new MqttClient(BrokerAddress, Port, false, null, null, MqttSslProtocols.None);
 
             // register a callback-function (we have to implement, see below) which is called by the library when a message was received
@@ -71,14 +86,32 @@ namespace SmartMonitorApp
             clientId = Guid.NewGuid().ToString();
 
             byte retVal = client.Connect(clientId, username, password);
-            Console.WriteLine("Connect error: " + retVal);
-            return (retVal == 0);
+            Console.WriteLine("MQTT Connect: " + retVal);
+
+            if (retVal != 0)
+            {
+                // error connecting
+                this.Disconnect();
+                return false;
+            }
+
+            return true;
         }
 
         public void Disconnect()
         {
+            client.MqttMsgPublishReceived -= client_MqttMsgPublishReceived;
             client.Disconnect();
+            Console.WriteLine("MQTT Disconnected");
+            client = null;
         }
+
+        public bool IsConnected()
+        {
+            if (client != null)
+                return client.IsConnected;
+            return false;
+        } 
 
         public bool Publish(string topic, string message)
         {

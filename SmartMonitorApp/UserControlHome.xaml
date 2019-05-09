@@ -43,8 +43,10 @@
             </StackPanel>
         </materialDesign:Card>
 
-        <Button x:Name="btnConnect" Grid.Row="3" Padding="32" Margin="16" Height="Auto" Click="btnConnect_Click">
-            Apply (restart required)
-        </Button>
+        <Button x:Name="btnConnect" Grid.Row="3" Padding="32" Margin="16" Height="Auto"   Click="btnConnect_Click">Connect</Button>
+
+        <materialDesign:Card Padding="32" Margin="16" Grid.Row="3" Grid.Column="3">
+            <TextBlock x:Name="txtStatus" FontSize="20"> Unknown </TextBlock>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

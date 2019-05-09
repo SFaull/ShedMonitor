@@ -22,7 +22,6 @@ namespace SmartMonitorApp
 {
     public partial class MainWindow : Window
     {
-        private MQTTManager mqttManager;
         private UserControl userControlHome;
         private UserControl userControlRHT;
         private UserControl userControlEnergy;
@@ -154,12 +153,9 @@ namespace SmartMonitorApp
         /// </summary>
         private void InitializeMQTT()
         {
-            mqttManager = new MQTTManager();
-            bool connected = mqttManager.Connect(Settings.Default.MqttUsername, Settings.Default.MqttPassword);
+            bool connected = MQTTManager.Instance.Connect(Settings.Default.MqttUsername, Settings.Default.MqttPassword);
             if (connected)
-                mqttManager.MessageReceived += MQTTManager_MessageReceived;
-            else
-                DisconnectMQTT();
+                MQTTManager.Instance.MessageReceived += MQTTManager_MessageReceived;
         }
 
         /// <summary>
@@ -175,10 +171,11 @@ namespace SmartMonitorApp
 
         private void DisconnectMQTT()
         {
-            if (mqttManager != null)
+            // FIXME: if MQTT connection is changed while the app is running, we never unsubscribe from the first instance of the MQTT manager, so the app never closes.
+            if (MQTTManager.Instance != null)
             {
-                mqttManager.Disconnect();
-                mqttManager = null;
+                MQTTManager.Instance.MessageReceived -= MQTTManager_MessageReceived;
+                MQTTManager.Instance.Disconnect();
             }
         }
 
